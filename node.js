@@ -4,16 +4,6 @@ const net = require('net')
 const app = express();
 
 
-app.set('view engine','ejs');
-
-
-app.get('/', function(req, res){
-	res.write("<a href = '/watch/owl-house/1'>Vid1</a>")
-	res.write("<br>")
-	res.write("<a href = '/watch/owl-house/2'>Vid2</a>")
-
-})
-
 app.get('/watch/:title/:ep', function (req, res) {
 	console.log(req.params.title, req.params.ep);
 	let path = "./shows/"+req.params.title+"/"+req.params.ep
@@ -26,7 +16,7 @@ app.get('/watch/:title/:ep', function (req, res) {
 		const end = parts[1] ? parseInt(parts[1],10) : fileSize-1
 		const chunksize = (end-start)+1
 		const file = fs.createReadStream(path, {start, end})
-		let msg = 'RES: 206,' + 'BYTES: ' + start + '-' + end + " SENDER: 192.168.1.98"
+		let msg = 'RES: 206,' + 'BYTES: ' + start + '-' + end + " SENDER: 192.168.1.98 "
 		var client = new net.Socket();
 		client.connect(5000, '192.168.1.70', function() {
 				console.log('Connected');
